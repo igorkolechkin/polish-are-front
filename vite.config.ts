@@ -6,6 +6,15 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
   plugins: [react(), tsconfigPaths(), tailwindcss()],
+  server: {
+    proxy: {
+      '/wp-json': {
+        target: 'https://usefulpolish.com',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
