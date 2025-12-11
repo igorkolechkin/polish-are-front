@@ -4,7 +4,9 @@ import type { GameBlock, GameBlockApi } from '@shared/types/games'
 
 export const getCategories = async (): Promise<Category[]> => {
   try {
-    const { data } = await base.get('/wp-json/wp/v2/exercises_cat')
+    const { data } = await base.get('/exercises_cat')
+
+    if (!data) return []
 
     return data.map((cat: Category): Category => ({
       id: cat.id,
@@ -18,9 +20,10 @@ export const getCategories = async (): Promise<Category[]> => {
   }
 }
 
-export const getExercisesByCategory = async (catId: number | null): Promise<Exercise[]> => {
+export const getExercisesByCategory = async (catId: number): Promise<Exercise[]> => {
   try {
-    const { data } = await base.get(`/wp-json/wp/v2/exercises?exercises_cat=${ catId }&per_page=100`)
+    const { data } = await base.get(`/exercises?exercises_cat=${ catId }&per_page=100`)
+    if (!data) return []
 
     return data.map((exercise: ExerciseApi): Exercise => ({
       id: exercise.id,
@@ -37,15 +40,17 @@ export const getExercisesByCategory = async (catId: number | null): Promise<Exer
 
 export const getExercise = async (slug: string): Promise<ExerciseInfo | null> => {
   try {
-    const res = await base.get(`/wp-json/wp/v2/exercises?slug=${ slug }`)
+    const res = await base.get(`/exercises?slug=${ slug }`)
     const data = res.data[0]
 
-    return {
-      title: data.title.rendered,
-      gamesList: data.acf.gamesList.map((games: GameBlockApi): GameBlock => {
+    if (!data) return null
+
+      return {
+      title: data?.title.rendered,
+      gamesList: data?.acf?.gamesList.map((games: GameBlockApi): GameBlock => {
         return {
-          name: games.acf_fc_layout,
-          list: games.list
+          name: games?.acf_fc_layout,
+          list: games?.list
         }
       })
     }
