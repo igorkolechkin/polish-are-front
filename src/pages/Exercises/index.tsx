@@ -9,18 +9,20 @@ type isLoadingType = {
   exercises: boolean
 }
 
-
 export default function Exercises() {
-  const [categories, setCategories] = useState<Category[]>([])
-  const [currentCategory, setCurrentCategory] = useState<number>(2)
-  const [exercises, setExercises] = useState<Exercise[]>([])
   const [isLoading, setIsLoading] = useState<isLoadingType>({ category: true, exercises: true })
+  const [categories, setCategories] = useState<Category[]>([])
+  const [exercises, setExercises] = useState<Exercise[] | null>(null)
+
+  const currentCategory: number = Number(localStorage.getItem('currentCategory') ?? 2)
 
   useEffect(() => {
     getCategories()
       .then(setCategories)
       .finally(() => setIsLoading(data => ({ ...data, category: false })))
+  }, [])
 
+  useEffect(() => {
     getExercisesByCategory(currentCategory)
       .then(setExercises)
       .finally(() => setIsLoading(data => ({ ...data, exercises: false })))
@@ -29,11 +31,8 @@ export default function Exercises() {
   function changedCategory(id: number): void {
     if (currentCategory === id) return
 
+    localStorage.setItem('currentCategory', String(id))
     setIsLoading(data => ({ ...data, exercises: true }))
-    setCurrentCategory(id)
-    getExercisesByCategory(id)
-      .then(setExercises)
-      .finally(() => setIsLoading(data => ({ ...data, exercises: false })))
   }
 
   return (

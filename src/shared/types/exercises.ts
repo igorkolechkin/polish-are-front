@@ -28,3 +28,11 @@ export type ExerciseInfo = {
   title: string,
   gamesList: GameBlock[]
 }
+
+export type ExerciseDataType = {
+  mistakes: number,
+  time: number,
+  currentGame: number,
+  currentGameItem: number,
+  gameLength: number
+}

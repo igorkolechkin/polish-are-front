@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import Loader from '@widgets/other/Loader.tsx'
 
 type Props = {
-  exercises: Exercise[],
+  exercises: Exercise[] | null,
   isLoading: boolean
 }
 
@@ -15,7 +15,7 @@ export function ExercisesList({ exercises, isLoading }: Props) {
       <div className="mt-10 h-full relative">
       { isLoading && <Loader /> }
 
-      { !isLoading && exercises.length
+      { (!isLoading && exercises) && exercises.length
         ? <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           { exercises.map((exercise: Exercise) => (
             <Card key={ exercise.id }>

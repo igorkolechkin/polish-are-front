@@ -28,6 +28,8 @@ export interface Game2TypeApi extends Omit<Game2Type, 'name'> {
   acf_fc_layout: string;
 }
 
+export type GameBlockBody = Game1TypeBody | Game2TypeBody
+
 export type GameBlock = Game1Type | Game2Type
 
 export type GameBlockApi = Game1TypeApi | Game2TypeApi

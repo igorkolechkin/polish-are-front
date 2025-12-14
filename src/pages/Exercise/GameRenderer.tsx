@@ -1,36 +1,29 @@
-import * as React from 'react'
-import type { Dispatch, SetStateAction } from 'react'
-import type { GameBlock } from '@shared/types/games.ts'
+import type { GameBlockBody } from '@shared/types/games.ts'
+import type { ExerciseDataType } from '@shared/types/exercises.ts'
 import Game1 from '@features/games/Game1'
 import Game2 from '@features/games/Game2'
+import type { Dispatch, SetStateAction } from 'react'
 
 type Props = {
-  currentGame: number
-  gamesList: GameBlock[],
-  setCurrentGame: Dispatch<SetStateAction<number>>
+  exerciseData: ExerciseDataType,
+  gameData: GameBlockBody,
+  gameName: string,
+  onGameStepsHandler: () => void
+  setExerciseData: Dispatch<SetStateAction<ExerciseDataType>>
 }
 
-type GameName = 'game-1' | 'game-2'
+const gamesMap = {
+  'game-1': Game1,
+  'game-2': Game2
+}
 
-export function GameComponent({ gamesList, currentGame, setCurrentGame }: Props) {
-  const gamesMap: Record<GameName, React.FC<any>> = {
-    'game-1': Game1,
-    'game-2': Game2
-  }
+export function GameComponent({ exerciseData, gameData, gameName, onGameStepsHandler, setExerciseData }: Props) {
+  const Component = gamesMap[gameName]
 
-  function getCurrentGame() {
-    if (!gamesList) return null
-
-    const currentGameData: GameBlock = gamesList[currentGame]
-    const currentGameName: string = currentGameData?.name
-
-    const Component = gamesMap[currentGameName]
-
-    return <Component
-      data={ currentGameData.list }
-      setCurrentGame={ setCurrentGame }
-    />
-  }
-
-  return getCurrentGame()
+  return <Component
+    exerciseData={ exerciseData }
+    gameData={ gameData }
+    onGameStepsHandler={ onGameStepsHandler }
+    setExerciseData={ setExerciseData }
+  />
 }

@@ -45,14 +45,12 @@ export const getExercise = async (slug: string): Promise<ExerciseInfo | null> =>
 
     if (!data) return null
 
-      return {
+    return {
       title: data?.title.rendered,
-      gamesList: data?.acf?.gamesList.map((games: GameBlockApi): GameBlock => {
-        return {
-          name: games?.acf_fc_layout,
-          list: games?.list
-        }
-      })
+      gamesList: data?.acf?.gamesList.map((games: GameBlockApi): GameBlock => ({
+        name: games?.acf_fc_layout,
+        list: games?.list
+      }))
     }
   } catch (error) {
     console.error('Ошибка при получении данных упражнения:', error)
