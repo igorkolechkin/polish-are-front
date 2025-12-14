@@ -31,7 +31,7 @@ export type ExerciseInfo = {
 
 export type ExerciseDataType = {
   mistakes: number,
-  time: number,
+  timeStart: number,
   currentGame: number,
   currentGameItem: number,
   gameLength: number

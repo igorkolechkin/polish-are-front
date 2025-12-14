@@ -8,7 +8,7 @@ import Loader from '@widgets/other/Loader.tsx'
 
 const defaultExerciseData = {
   mistakes: 0,
-  time: 0,
+  timeStart: performance.now(),
   currentGame: 0,
   currentGameItem: 0,
   gameLength: 0
@@ -38,6 +38,7 @@ export default function Exercise() {
   const currentGameItem: number = exerciseData.currentGameItem
   const currentGame: number = exerciseData.currentGame
   const gameLength: number = content?.gamesList[currentGame]?.list.length ?? 0
+  const gamesLength: number = content?.gamesList.length ?? 0
 
   function onGameStepsHandler() {
     if (currentGameItem < gameLength - 1) {
@@ -57,7 +58,7 @@ export default function Exercise() {
   function onResetGameSteps() {
     setExerciseData({
       ...defaultExerciseData,
-      gameLength: content?.gamesList[defaultExerciseData.currentGame]?.list.length ?? 0
+      gameLength: content?.gamesList[0]?.list.length ?? 0
     })
   }
 
@@ -71,10 +72,10 @@ export default function Exercise() {
 
           { (!isLoading && content) &&
             (<>
-              { content.gamesList.length > currentGame &&
+              { gamesLength > currentGame &&
                 <p className="text-2xl font-bold text-center mb-10">{ content.title }</p> }
 
-              { content.gamesList.length > currentGame
+              { gamesLength > currentGame
                 ? <GameComponent
                   exerciseData={ exerciseData }
                   gameData={ content.gamesList[currentGame].list[currentGameItem] }
@@ -83,6 +84,7 @@ export default function Exercise() {
                   setExerciseData={ setExerciseData }
                 />
                 : <FinishGame
+                  timeStart={ exerciseData.timeStart }
                   mistakes={ exerciseData.mistakes }
                   onResetGameSteps={ onResetGameSteps }
                 />
