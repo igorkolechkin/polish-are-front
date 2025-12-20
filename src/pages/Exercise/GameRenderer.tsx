@@ -18,6 +18,7 @@ const gamesMap = {
 }
 
 export function GameComponent({ exerciseData, gameData, gameName, onGameStepsHandler, setExerciseData }: Props) {
+  // @ts-ignore
   const Component = gamesMap[gameName]
 
   return <Component

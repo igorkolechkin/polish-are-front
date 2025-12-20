@@ -1,5 +1,14 @@
 export const ROUTES = {
-  HOME: '/',
-  EXERCISES: '/exercises',
-  EXERCISE: '/exercises/:slug'
+  HOME: {
+    url: '/',
+    title: 'Головна'
+  },
+  EXERCISES: {
+    url: '/exercises',
+    title: 'Завдання'
+  },
+  EXERCISE: {
+    url: '/exercises/:slug',
+    title: 'Гра'
+  }
 } as const

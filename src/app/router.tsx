@@ -7,21 +7,21 @@ export const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: ROUTES.HOME,
+        path: ROUTES.HOME.url,
         lazy: () =>
           import('@pages/Home').then(module => ({
             Component: module.default
           }))
       },
       {
-        path: ROUTES.EXERCISES,
+        path: ROUTES.EXERCISES.url,
         lazy: () =>
           import('@pages/Exercises').then(module => ({
             Component: module.default
           }))
       },
       {
-        path: ROUTES.EXERCISE,
+        path: ROUTES.EXERCISE.url,
         lazy: () =>
           import('@pages/Exercise').then(module => ({
             Component: module.default
