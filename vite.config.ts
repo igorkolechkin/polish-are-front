@@ -10,17 +10,5 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
-  },
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes('/pages/')) {
-            const match = id.match(/\/pages\/([^/]+)/)
-            if (match) return `${ match[1] }-page`
-          }
-        }
-      }
-    }
   }
 })

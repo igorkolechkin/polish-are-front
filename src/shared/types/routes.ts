@@ -4,11 +4,11 @@ export const ROUTES = {
     title: 'Головна'
   },
   EXERCISES: {
-    url: '/exercises',
+    url: '/exercises/',
     title: 'Завдання'
   },
   EXERCISE: {
-    url: '/exercises/:slug',
+    url: '/exercises/:slug/',
     title: 'Гра'
   }
 } as const
