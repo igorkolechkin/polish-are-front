@@ -30,3 +30,4 @@ export default function FinishGame({ timeStart, mistakes, onResetGameSteps }: Pr
     </div>
   )
 }
+
